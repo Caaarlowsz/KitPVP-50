@@ -3,3 +3,8 @@ version: ${project.version}
 main: me.acidviper.kitpvp.KitPVP
 authors: [ AcidViper ]
 description: KitPVP plugin developed by indite development.
+commands:
+  createkit:
+  seticon:
+  kits:
+  shop:

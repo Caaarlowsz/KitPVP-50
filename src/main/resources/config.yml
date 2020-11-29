@@ -1,0 +1,11 @@
+DEFAULT_MONEY: 125
+KILLCOINS: 15
+TITLE: Test
+SCOREBOARD:
+  - '&m------------------'
+  - '&2Current kills: &a<CKills>'
+  - '&2Current deaths: &a<CDeaths>'
+  - '&2All Time Deaths : &a<ADeaths>'
+  - '&2All Time Kills : &a<AKills>'
+  - '&2Current Money : &a<Money>'
+  - '&m------------------'

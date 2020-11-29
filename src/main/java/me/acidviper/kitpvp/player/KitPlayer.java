@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.acidviper.kitpvp.KitPVP;
 import me.acidviper.kitpvp.kit.KitBase;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -37,9 +38,13 @@ public class KitPlayer {
             allTimeDeaths = KitPVP.getInstance().getDatabase().getInt(prefix + "ALLTIMEDEATHS");
             money = KitPVP.getInstance().getDatabase().getInt(prefix + "MONEY");
             ownedKits = KitPVP.getInstance().getDatabase().getStringList(prefix + "OWNEDKITS");
+
+            updateKits();
         }
 
         playerObject = p;
+
+        kitPlayers.put(uuid, this);
     }
 
     public void createConfig() {
@@ -49,7 +54,8 @@ public class KitPlayer {
 
         KitPVP.getInstance().getDatabase().set(prefix + "ALLTIMEKILLS", 0);
         KitPVP.getInstance().getDatabase().set(prefix + "ALLTIMEDEATHS", 0);
-        KitPVP.getInstance().getDatabase().set(prefix + "MONEY", 0); // TODO: Change to default starting cash
+        KitPVP.getInstance().getDatabase().set(prefix + "MONEY", KitPVP.getInstance().getBConfig().getInt("DEFAULT_MONEY"));
+        money = KitPVP.getInstance().getBConfig().getInt("DEFAULT_MONEY");
 
         List<String> defaultKits = new ArrayList<>();
         for (KitBase kit : KitBase.getKits()) if (kit.isDefault()) defaultKits.add(kit.getName());
@@ -68,5 +74,15 @@ public class KitPlayer {
         KitPVP.getInstance().getDatabase().set(prefix + "OWNEDKITS", ownedKits);
 
         KitPVP.getInstance().saveDatabase();
+    }
+
+    public void updateKits() {
+        for (KitBase kits : KitBase.getKits()) {
+            if (kits.isDefault()) {
+                if (!(ownedKits.contains(kits.getName()))) {
+                    ownedKits.add(kits.getName());
+                }
+            }
+        }
     }
 }
